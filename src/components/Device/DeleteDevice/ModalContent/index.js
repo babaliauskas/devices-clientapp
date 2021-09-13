@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { deleteDevice } from '../../../../actions';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 	modal: {
 		width: '400px',
 		height: '150px',
