@@ -1,0 +1,18 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	background-color: rgb(214, 214, 214);
+}
+
+li,
+label,
+#filter-list,
+#sort-devices {
+	font-size: 10px !important;
+	padding: 0 25px 5px 5px;
+}
