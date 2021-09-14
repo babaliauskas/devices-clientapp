@@ -67,7 +67,7 @@ const ModalBody = ({ setOpen, id }) => {
 	}, [id, dispatch]);
 
 	const handleSubmit = async () => {
-		if (name === '' || capacity === '' || type === 'Select_type')
+		if (name === '' || capacity === '' || type === 'Select_Type')
 			return setError(true);
 
 		setLoading(true);
