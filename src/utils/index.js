@@ -8,3 +8,17 @@ export const sort = ({ data, value }) => {
 	});
 	return sortedDevices;
 };
+
+export const filters = ({ data, filterValues }) => {
+	if (!filterValues.length) return data;
+	const filteredDevices = data.filter((device) =>
+		filterValues.includes(device.type)
+	);
+	return filteredDevices;
+};
+
+export const filteredAndSorted = ({ data, sortValue, filterValues }) => {
+	const filteredData = filters({ data, filterValues });
+	const sortedAndFiltered = sort({ data: filteredData, value: sortValue });
+	return sortedAndFiltered;
+};

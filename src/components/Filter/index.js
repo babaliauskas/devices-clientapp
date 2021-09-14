@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-import { sort as sortFunc } from '../../utils';
+import { setFilterAction } from '../../actions';
 import { filterTypesList } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,26 +37,17 @@ function getStyles(name, personName, theme) {
 	};
 }
 
-const Filter = ({ setDevices }) => {
+const Filter = () => {
 	const classes = useStyles();
 	const theme = useTheme();
 
-	const { devices, sortBy } = useSelector((state) => state.devices);
+	const dispatch = useDispatch();
 	const [value, setValue] = useState([]);
 
 	const handleChange = (event) => {
 		const { value } = event.target;
 		setValue(value);
-
-		if (!value.length)
-			return setDevices(sortFunc({ data: devices, value: sortBy }));
-
-		const filteredDevices = devices.filter((device) =>
-			value.includes(device.type)
-		);
-
-		const sortedDevices = sortFunc({ data: filteredDevices, value: sortBy });
-		setDevices(sortedDevices);
+		dispatch(setFilterAction({ value }));
 	};
 
 	return (

@@ -8,7 +8,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import { setSortDevices } from '../../actions';
-import { sort as sortFunc } from '../../utils';
 import { sortByList } from '../../constants';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Sort = ({ devices, setDevices }) => {
+const Sort = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const initialSortVal = useSelector((state) => state.devices.sortBy);
@@ -28,8 +27,6 @@ const Sort = ({ devices, setDevices }) => {
 		const { value } = event.target;
 		setSort(value);
 		dispatch(setSortDevices({ value }));
-		const sortedList = sortFunc({ data: devices, value });
-		setDevices(sortedList);
 	};
 
 	return (

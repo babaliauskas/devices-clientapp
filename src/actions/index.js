@@ -1,15 +1,19 @@
 import axios from 'axios';
-import { setDevices, setDevice, setSort } from '../reducer';
+import {
+	setDevices,
+	setDevice,
+	setSort,
+	addNewDevice,
+	updatedDevices,
+	setFilter,
+} from '../reducer';
 import { urls } from '../client/requests';
-import { sort } from '../utils';
 
-export const fetchDevices = () => async (dispatch, getState) => {
-	const { sortBy } = getState().devices;
+export const fetchDevices = () => async (dispatch) => {
 	try {
 		const response = await axios.get(urls.devices());
-		const sortedList = sort({ data: response.data, value: sortBy });
-		dispatch(setDevices(sortedList));
-		return sortedList;
+		dispatch(setDevices(response.data));
+		return response.data;
 	} catch (err) {
 		console.error(err);
 		return false;
@@ -46,8 +50,9 @@ export const addDevice =
 	({ device }) =>
 	async (dispatch) => {
 		try {
-			await axios.post(urls.devices(), device);
-			dispatch(fetchDevices());
+			const response = await axios.post(urls.devices(), device);
+
+			dispatch(addNewDevice(response.data));
 			return true;
 		} catch (err) {
 			console.error(err);
@@ -55,13 +60,24 @@ export const addDevice =
 		}
 	};
 
+export const setFilterAction =
+	({ value }) =>
+	(dispatch) => {
+		dispatch(setFilter(value));
+	};
+
 export const deleteDevice =
 	({ id }) =>
-	async (dispatch) => {
+	async (dispatch, getState) => {
+		const { devices } = getState().devices;
 		try {
-			await axios.delete(urls.devicesId({ id }));
-			dispatch(fetchDevices());
-			return true;
+			const response = await axios.delete(urls.devicesId({ id }));
+			if (response.data === 1) {
+				const filteredDevices = devices.filter((device) => device.id !== id);
+				dispatch(updatedDevices(filteredDevices));
+				return true;
+			}
+			return false;
 		} catch (err) {
 			console.error(err);
 			return false;

@@ -11,12 +11,14 @@ import NoDevices from './components/shared/NoDevices';
 import Sort from './components/Sort';
 import AddSystem from './components/AddSystem';
 import Device from './components/Device';
+import { filteredAndSorted } from './utils';
 
 const useStyles = makeStyles(() => ({
 	container: {
 		backgroundColor: 'white',
 		width: '600px',
-		height: '100vh',
+		minHeight: '100vh',
+		height: '100%',
 		margin: 'auto',
 		padding: '20px 20px',
 	},
@@ -26,21 +28,18 @@ const App = () => {
 	const classes = useStyles();
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	const [devices, setDevices] = useState([]);
 
-	const stateDevices = useSelector((state) => state.devices.devices);
+	const { devices, filters, sortBy } = useSelector((state) => state.devices);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const bla = async () => {
 			const response = await dispatch(fetchDevices());
-			if (response) setDevices(response);
-			else setError(true);
+			if (!response) setError(true);
 			setLoading(false);
 		};
-		if (!stateDevices.length) bla();
-		else setDevices(stateDevices);
-	}, [dispatch, stateDevices]);
+		bla();
+	}, [dispatch]);
 
 	if (loading) return <Loading />;
 	else if (error) return <Error />;
@@ -48,14 +47,18 @@ const App = () => {
 	return (
 		<Grid className={classes.container}>
 			<Grid container justifyContent='center' alignItems='center'>
-				<Filter setDevices={setDevices} />
-				<Sort devices={devices} setDevices={setDevices} />
+				<Filter />
+				<Sort />
 				<AddSystem />
 			</Grid>
 			{!devices.length && <NoDevices />}
 
 			<Container className={classes.content}>
-				{devices.map((device) => (
+				{filteredAndSorted({
+					data: devices,
+					sortValue: sortBy,
+					filterValues: filters,
+				}).map((device) => (
 					<Device key={device.id} device={device} />
 				))}
 			</Container>
