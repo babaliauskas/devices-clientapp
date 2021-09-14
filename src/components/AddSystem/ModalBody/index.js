@@ -61,6 +61,8 @@ const ModalBody = ({ setOpen, id }) => {
 				setName(system_name);
 				setType(type);
 				setCapacity(hdd_capacity);
+			} else {
+				setPostError(true);
 			}
 		};
 		if (id) getData();

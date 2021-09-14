@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 		width: '600px',
 		height: '100vh',
 		margin: 'auto',
-		padding: '20px 0',
+		padding: '20px 20px',
 	},
 }));
 
@@ -44,7 +44,6 @@ const App = () => {
 
 	if (loading) return <Loading />;
 	else if (error) return <Error />;
-	else if (!devices.length) return <NoDevices />;
 
 	return (
 		<Grid className={classes.container}>
@@ -53,6 +52,7 @@ const App = () => {
 				<Sort devices={devices} setDevices={setDevices} />
 				<AddSystem />
 			</Grid>
+			{!devices.length && <NoDevices />}
 
 			<Container className={classes.content}>
 				{devices.map((device) => (

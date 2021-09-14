@@ -24,13 +24,13 @@ const SelectForm = ({ func, value }) => {
 	};
 	return (
 		<Grid container alignItems='center' className={classes.container}>
-			<Grid item md={5}>
+			<Grid item xs={5}>
 				<Typography className={classes.text}>
 					Type
 					<sup> *</sup>
 				</Typography>
 			</Grid>
-			<Grid item md={7}>
+			<Grid item xs={7}>
 				<FormControl
 					fullWidth
 					variant='outlined'

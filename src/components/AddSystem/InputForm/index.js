@@ -18,13 +18,13 @@ const InputForm = ({ func, title, type, value }) => {
 
 	return (
 		<Grid container alignItems='center' className={classes.container}>
-			<Grid item md={5}>
+			<Grid item xs={5}>
 				<Typography className={classes.text}>
 					{title}
 					<sup> *</sup>
 				</Typography>
 			</Grid>
-			<Grid item md={7}>
+			<Grid item xs={7}>
 				<TextField
 					type={type === 'int' ? 'number' : 'text'}
 					variant='outlined'

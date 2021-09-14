@@ -26,12 +26,12 @@ const Device = ({ device }) => {
 			className={classes.container}
 			justifyContent='space-between'
 		>
-			<Grid item md={10}>
+			<Grid item xs={10}>
 				<DeviceDetails name='System Name' value={device.system_name} />
 				<DeviceDetails name='Type' value={device.type} />
 				<DeviceDetails name='HDD Capacity' value={device.hdd_capacity} />
 			</Grid>
-			<Grid item md={2}>
+			<Grid item xs={2}>
 				<Grid
 					container
 					justifyContent='space-around'
